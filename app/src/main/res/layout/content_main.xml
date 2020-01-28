@@ -22,21 +22,18 @@
         android:id="@+id/changeBrightnessSeekBar"
         android:layout_width="348dp"
         android:layout_height="0dp"
-        android:layout_marginTop="374dp"
-        android:layout_marginBottom="28dp"
-        app:layout_constraintBottom_toTopOf="@+id/ledModeButton"
+        android:layout_marginBottom="214dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/turnOnLightsButton" />
 
     <TextView
         android:id="@+id/testText"
         android:layout_width="203dp"
         android:layout_height="0dp"
         android:layout_marginTop="98dp"
-        android:layout_marginBottom="189dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/changeBrightnessSeekBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,4 +48,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/changeBrightnessSeekBar" />
+
+    <TextView
+        android:id="@+id/testText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="223dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/turnOnLightsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
