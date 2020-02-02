@@ -1,44 +1,60 @@
 package com.kriss.roomcontrol
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_led_mode.*
+
 
 class LedModeActivity : AppCompatActivity() {
 
-    private lateinit var listView : ListView
+    private lateinit var listView: ListView
+    private lateinit var ledAdapter: LedSceneRecyclerAdapter
     lateinit var database: DatabaseReference
+    private val listItems: MutableList<LedScene> = mutableListOf()
+    private val TAG = "dupa123"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_led_mode)
 
-        listView = findViewById(R.id.ledSceneListView)
 
-        val listItems = arrayOf("January", "February", "March")
+
 
         database = FirebaseDatabase.getInstance().getReference("LED_SCENE")
 
-        database.addValueEventListener(object: ValueEventListener {
+        database.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-
+                //Log.v(TAG, "nie udalo sie")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val nameValue : String? = p0.child("name").getValue(String::class.java)
-                val descriptionValue : String? = p0.child("description").getValue(String::class.java)
-                listItems[1] = nameValue!!
-                listItems[2] = descriptionValue!!
-            }
+                p0.children.mapNotNullTo(listItems) { it.getValue<LedScene>(LedScene::class.java) }
 
+                //listItems.forEach { Log.v(TAG, "test " + it.name + " " + it.description) }
+                initRecyclerView()
+                addDataSet()
+
+            }
         })
 
+    }
 
+    private fun addDataSet() {
+    ledAdapter.submitList(listItems)
+    }
 
-
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
-        listView.adapter = adapter
+    private fun initRecyclerView() {
+        recycler_view.apply {
+            layoutManager = LinearLayoutManager(this@LedModeActivity)
+            val topSpacingItemDecoration = TopSpacingItemDecoration(30)
+            addItemDecoration(topSpacingItemDecoration)
+            ledAdapter = LedSceneRecyclerAdapter()
+            adapter = ledAdapter
+        }
     }
 }
