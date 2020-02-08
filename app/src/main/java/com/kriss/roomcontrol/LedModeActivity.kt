@@ -24,9 +24,10 @@ class LedModeActivity : AppCompatActivity(), LedSceneRecyclerAdapter.OnLedSceneL
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_led_mode)
 
+        onDataBaseListener()
+    }
 
-
-
+    private fun onDataBaseListener(){
         database = FirebaseDatabase.getInstance().getReference("LED_SCENE")
 
         database.addValueEventListener(object : ValueEventListener {
@@ -36,14 +37,13 @@ class LedModeActivity : AppCompatActivity(), LedSceneRecyclerAdapter.OnLedSceneL
 
             override fun onDataChange(p0: DataSnapshot) {
                 p0.children.mapNotNullTo(listItems) { it.getValue<LedScene>(LedScene::class.java) }
-                //listItems.forEach { Log.v(TAG, "test " + it.name + " " + it.description) }
                 initRecyclerView()
                 addDataSet()
-
             }
         })
-
     }
+
+
     private fun initRecyclerView() {
         recycler_view.apply {
             layoutManager = LinearLayoutManager(this@LedModeActivity)

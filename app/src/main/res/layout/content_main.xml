@@ -5,64 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:id="@+id/fragment_container"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
-        android:id="@+id/turnOnLightsButton"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="340dp"
-        android:layout_height="70dp"
-        android:background="@color/colorButtonOn"
-        android:text="On"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <SeekBar
-        android:id="@+id/changeBrightnessSeekBar"
-        android:layout_width="340dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="214dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/turnOnLightsButton" />
 
-    <TextView
-        android:id="@+id/testText"
-        android:layout_width="203dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="98dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/ledModeButton"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="340dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="138dp"
-        android:background="@color/colorButtonOn"
-        android:text="Button"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changeBrightnessSeekBar" />
-
-    <TextView
-        android:id="@+id/testText2"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="223dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/turnOnLightsButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="1dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

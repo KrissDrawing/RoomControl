@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ControlFragment"
+    android:id="@+id/frameLayout">
+
+    <Button
+        android:id="@+id/turnOnLightsButton"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="367dp"
+        android:layout_height="139dp"
+        android:background="@color/colorButtonOn"
+        android:text="On"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.055"
+        tools:layout_conversion_absoluteHeight="70dp"
+        tools:layout_conversion_absoluteWidth="340dp" />
+
+    <SeekBar
+        android:id="@+id/changeBrightnessSeekBar"
+        android:layout_width="340dp"
+        android:layout_height="85dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.422"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/turnOnLightsButton"
+        app:layout_constraintVertical_bias="0.076"
+        tools:layout_conversion_absoluteHeight="0dp"
+        tools:layout_conversion_absoluteWidth="340dp" />
+
+    <Button
+        android:id="@+id/ledModeButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="351dp"
+        android:layout_height="64dp"
+        android:background="@color/colorButtonOn"
+        android:text="Button"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeBrightnessSeekBar"
+        app:layout_constraintVertical_bias="0.099"
+        tools:layout_conversion_absoluteHeight="70dp"
+        tools:layout_conversion_absoluteWidth="340dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/control"
+        android:title="control"
+        android:icon="@drawable/ic_brightness"/>
+
+    <item
+        android:id="@+id/goldenRule"
+        android:title="golden rule"
+        android:icon="@drawable/ic_alarm"/>
+
+    <item
+        android:id="@+id/checkList"
+        android:title="check list"
+        android:icon="@drawable/ic_assignment"/>
+
+</menu>
