@@ -1,19 +1,24 @@
 package com.kriss.roomcontrol
 
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.fragment_control.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -23,9 +28,9 @@ class ControlFragment : Fragment() {
     lateinit var changeBrightnessSeekBar: SeekBar
     lateinit var turnOnLightsButton: Button
     lateinit var ledModeButton: Button
+    lateinit var alarmButton: ImageButton
 
     lateinit var database: DatabaseReference
-    lateinit var databaseStatus: DatabaseReference
 
     var ledModeButtonText: String = ""
     var turnText: String = ""
@@ -43,12 +48,46 @@ class ControlFragment : Fragment() {
         changeBrightnessSeekBar = controlLayout.findViewById(R.id.changeBrightnessSeekBar)
         turnOnLightsButton = controlLayout.findViewById(R.id.turnOnLightsButton)
         ledModeButton = controlLayout.findViewById(R.id.ledModeButton)
+        alarmButton = controlLayout.findViewById(R.id.alarmButton)
 
         onDataBaseListener()
         initializeUIItems()
 
+        alarmButton.setOnClickListener{
+            val cal = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+
+                UpdateTimeText(cal)
+
+                startAlarm(cal)
+            }
+            TimePickerDialog(alarmButton.context,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
+        }
+
         return controlLayout
 
+    }
+
+    private fun UpdateTimeText(cal: Calendar) {
+        timeText.text = SimpleDateFormat("HH:mm").format(cal.time)
+    }
+
+    private fun startAlarm(cal: Calendar) {
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlertReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context,1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pendingIntent)
+
+    }
+
+    private fun cancelAlarm(){
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlertReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context,1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.cancel(pendingIntent)
     }
 
     private fun onDataBaseListener(){
@@ -80,7 +119,7 @@ class ControlFragment : Fragment() {
 
     private fun initializeUIItems(){
         ledModeButton.setOnClickListener {
-            val intent: Intent? = Intent(context, LedModeActivity::class.java)
+            val intent: Intent = Intent(context, LedModeActivity::class.java)
             startActivity(intent)
         }
 
