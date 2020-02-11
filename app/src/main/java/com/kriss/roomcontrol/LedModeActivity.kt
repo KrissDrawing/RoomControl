@@ -1,8 +1,6 @@
 package com.kriss.roomcontrol
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +14,7 @@ class LedModeActivity : AppCompatActivity(), LedSceneRecyclerAdapter.OnLedSceneL
     private lateinit var listView: ListView
     private lateinit var ledAdapter: LedSceneRecyclerAdapter
     lateinit var database: DatabaseReference
-   // private val listItems: MutableList<LedScene> = mutableListOf()
+    // private val listItems: MutableList<LedScene> = mutableListOf()
     private val listItems: MutableList<LedScene> = mutableListOf()
     private val TAG = "dupa123"
 
@@ -27,7 +25,7 @@ class LedModeActivity : AppCompatActivity(), LedSceneRecyclerAdapter.OnLedSceneL
         onDataBaseListener()
     }
 
-    private fun onDataBaseListener(){
+    private fun onDataBaseListener() {
         database = FirebaseDatabase.getInstance().getReference("LED_SCENE")
 
         database.addValueEventListener(object : ValueEventListener {
@@ -49,22 +47,21 @@ class LedModeActivity : AppCompatActivity(), LedSceneRecyclerAdapter.OnLedSceneL
             layoutManager = LinearLayoutManager(this@LedModeActivity)
             val topSpacingItemDecoration = TopSpacingItemDecoration(30)
             addItemDecoration(topSpacingItemDecoration)
-            ledAdapter = LedSceneRecyclerAdapter(listItems,this@LedModeActivity)
+            ledAdapter = LedSceneRecyclerAdapter(listItems, this@LedModeActivity)
             adapter = ledAdapter
         }
     }
 
     private fun addDataSet() {
-    ledAdapter.submitList(listItems)
+        ledAdapter.submitList(listItems)
     }
-
 
 
     override fun OnLedSceneClick(position: Int) {
 
-        var ref : DatabaseReference = FirebaseDatabase.getInstance().getReference("LED_CONTROL")
+        var ref: DatabaseReference = FirebaseDatabase.getInstance().getReference("LED_CONTROL")
         ref.child("LEDSCENE").setValue(listItems.get(position).name)
-        Toast.makeText(this, listItems.get(position).name,Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, listItems.get(position).name, Toast.LENGTH_SHORT).show()
     }
 
 }

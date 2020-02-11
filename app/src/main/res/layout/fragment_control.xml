@@ -70,7 +70,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="229dp"
-        tools:layout_editor_absoluteY="427dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toEndOf="@+id/alarmButton"
+        tools:layout_editor_absoluteY="426dp" />
+
+    <Button
+        android:id="@+id/alarmCancelButton"
+        android:layout_width="161dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="128dp"
+        android:text="CancelAlarm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toEndOf="@+id/alarmButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), TaskFragment.OnListFragmentInteractionListener {
+class MainActivity : AppCompatActivity(){
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener{ item->
         when(item.itemId){
@@ -49,10 +49,6 @@ class MainActivity : AppCompatActivity(), TaskFragment.OnListFragmentInteraction
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
-    }
-
-    override fun onListFragmentInteraction(item: DummyContent.DummyItem?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

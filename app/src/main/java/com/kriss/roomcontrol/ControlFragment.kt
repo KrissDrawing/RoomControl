@@ -29,6 +29,7 @@ class ControlFragment : Fragment() {
     lateinit var turnOnLightsButton: Button
     lateinit var ledModeButton: Button
     lateinit var alarmButton: ImageButton
+    lateinit var alarmCancelButton: Button
 
     lateinit var database: DatabaseReference
 
@@ -49,6 +50,7 @@ class ControlFragment : Fragment() {
         turnOnLightsButton = controlLayout.findViewById(R.id.turnOnLightsButton)
         ledModeButton = controlLayout.findViewById(R.id.ledModeButton)
         alarmButton = controlLayout.findViewById(R.id.alarmButton)
+        alarmCancelButton = controlLayout.findViewById(R.id.alarmCancelButton)
 
         onDataBaseListener()
         initializeUIItems()
@@ -66,12 +68,18 @@ class ControlFragment : Fragment() {
             TimePickerDialog(alarmButton.context,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
         }
 
+        alarmCancelButton.setOnClickListener{
+            cancelAlarm()
+        }
+
+
         return controlLayout
 
     }
 
     private fun UpdateTimeText(cal: Calendar) {
         timeText.text = SimpleDateFormat("HH:mm").format(cal.time)
+        Toast.makeText(context, "alarm set on: " + timeText.text , Toast.LENGTH_SHORT).show()
     }
 
     private fun startAlarm(cal: Calendar) {
@@ -88,6 +96,8 @@ class ControlFragment : Fragment() {
         val pendingIntent = PendingIntent.getBroadcast(context,1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager.cancel(pendingIntent)
+        context!!.stopService(Intent(context!!, AlertService::class.java))
+        Toast.makeText(context, "alarm cancelled" , Toast.LENGTH_SHORT).show()
     }
 
     private fun onDataBaseListener(){
