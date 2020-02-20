@@ -40,9 +40,9 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        bottomNavigation.setOnNavigationItemSelectedListener (mOnNavigationItemSelectedListener)
         replaceFragment(ControlFragment())
+        bottomNavigation.setOnNavigationItemSelectedListener (mOnNavigationItemSelectedListener)
+
     }
 
     private fun replaceFragment(fragment : Fragment){

@@ -4,8 +4,10 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import java.util.List;
 
-public class Task extends ExpandableGroup<Subtask> {
-    public Task(String title, List<Subtask> items) {
+public class Tasks extends ExpandableGroup<Task> {
+
+
+    public Tasks(String title, List<Task> items) {
         super(title, items);
     }
 }
