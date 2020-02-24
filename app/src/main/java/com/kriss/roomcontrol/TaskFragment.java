@@ -1,26 +1,24 @@
 package com.kriss.roomcontrol;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -29,39 +27,99 @@ import java.util.List;
  */
 public class TaskFragment extends Fragment {
 
-   // private TaskRecyclerAdapter taskRecyclerAdapter;
+    // private TaskRecyclerAdapter taskRecyclerAdapter;
     private List<Task> listOfTasks= new ArrayList();
+   // private Bundle savedInstanceState;
+    private TaskAdapter adapter;
+    Serializable state;
 
     public TaskFragment() {
         // Required empty public constructor
     }
 
+   /* public TaskFragment(Bundle savedInstanceState) {
+        this.savedInstanceState = savedInstanceState;
+        // Required empty public constructor
+    }*/
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            listOfTasks = savedInstanceState.getParcelableArrayList("ITEMS");
+            adapter = new TaskAdapter(listOfTasks);
+            adapter.onRestoreInstanceState(savedInstanceState);
+        }else{
+            populateList();
+            adapter = new TaskAdapter(listOfTasks);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View taskLayout = inflater.inflate(R.layout.fragment_task, container, false);
+        View taskLayout = inflater.inflate(R.layout.task_fragment, container, false);
+
 
 
         RecyclerView recyclerView = taskLayout.findViewById(R.id.task_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(taskLayout.getContext()));
-        populateList();
-        TaskAdapter adapter = new TaskAdapter(listOfTasks);
 
+        //adapter.onRestoreInstanceState(savedInstanceState);
         TopSpacingItemDecoration topSpacingItemDecoration = new TopSpacingItemDecoration(30);
         recyclerView.addItemDecoration(topSpacingItemDecoration);
         //recyclerView.setHasFixedSize(false);
         //taskRecyclerAdapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
-
-
-
         return taskLayout;
     }
 
-    /*private void onDataBaseListener() {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        adapter.onSaveInstanceState(outState);
+
+        //outState.putSerializable("ITEMS", state);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        adapter.onRestoreInstanceState(savedInstanceState);
+        super.onViewStateRestored(savedInstanceState);
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_task,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_add){
+            Intent intent = new Intent(getContext(), TaskEditActivity.class);
+            startActivity(intent);
+            Toast.makeText(getActivity(),"dodaj aktywnosc", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+       /* @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        adapter.onSaveInstanceState(savedInstanceState);
+
+    }
+*/
+
+
+/*private void onDataBaseListener() {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("LED_SCENE");
 
                 database.addValueEventListener(new ValueEventListener() {

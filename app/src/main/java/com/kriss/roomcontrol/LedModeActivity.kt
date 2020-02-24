@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.activity_led_mode.*
 
 class LedModeActivity : AppCompatActivity(), LedSceneRecyclerAdapter.OnLedSceneListener {
 
-    private lateinit var listView: ListView
     private lateinit var ledAdapter: LedSceneRecyclerAdapter
     lateinit var database: DatabaseReference
     // private val listItems: MutableList<LedScene> = mutableListOf()
